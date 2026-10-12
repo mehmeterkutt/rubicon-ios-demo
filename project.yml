@@ -52,10 +52,28 @@ targets:
         # Install detection: a build with a higher CFBundleVersion over this one gives Application Updated.
         CURRENT_PROJECT_VERSION: "1"
         MARKETING_VERSION: "1.0"
+  # Walks through the app and saves the screenshots of the user guide; not a test of anything.
+  GuideShots:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources: [GuideShots]
+    dependencies:
+      - target: RubiconDemo
+    settings:
+      base:
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGNING_REQUIRED: NO
 schemes:
   RubiconDemo:
     build:
       targets:
         RubiconDemo: all
+        GuideShots: [test]
     run:
       config: Debug
+    test:
+      config: Debug
+      targets: [GuideShots]
