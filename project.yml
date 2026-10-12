@@ -1,0 +1,61 @@
+# XcodeGen spec; the .xcodeproj is generated (`xcodegen generate`), never committed.
+name: RubiconDemo
+options:
+  bundleIdPrefix: com.rubicon
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "16.0"
+packages:
+  Rubicon:
+    # The SDK from its checkout next to this repository (the counterpart of the Android composite
+    # build). Once a release is tagged: `url: https://github.com/rubicon-team/rubicon-ios-sdk`,
+    # `from: 0.1.0`.
+    path: ../rubicon-ios-sdk
+targets:
+  RubiconDemo:
+    type: application
+    platform: iOS
+    sources: [RubiconDemo]
+    dependencies:
+      - package: Rubicon
+        product: Rubicon
+    info:
+      path: RubiconDemo/Info.plist
+      properties:
+        CFBundleDisplayName: Rubicon
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        # The scene lifecycle is mandatory for apps built with the iOS 27 SDK.
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        # The deep links the Capture tab opens: rubicon://open/... and rubicon://legacy/...
+        CFBundleURLTypes:
+          - CFBundleURLName: com.rubicon.demo
+            CFBundleURLSchemes: [rubicon]
+        # The fake backend is plain http on the Mac, and the Capture tab calls http hosts on purpose
+        # (an unknown host, a refused port). The manual checklist removes this entry once to see
+        # TLS_FAILED.
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rubicon.demo
+        SWIFT_VERSION: "5.0"
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGNING_REQUIRED: NO
+        # Install detection: a build with a higher CFBundleVersion over this one gives Application Updated.
+        CURRENT_PROJECT_VERSION: "1"
+        MARKETING_VERSION: "1.0"
+schemes:
+  RubiconDemo:
+    build:
+      targets:
+        RubiconDemo: all
+    run:
+      config: Debug
