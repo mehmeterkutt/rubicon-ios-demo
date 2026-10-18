@@ -8,6 +8,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         let navigation = UINavigationController(rootViewController: HomeViewController())
         navigation.navigationBar.prefersLargeTitles = false
+        // An opaque bar: the scrolled content must not show through the title and the counters.
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Theme.paper)
+        appearance.shadowColor = UIColor(Theme.outline)
+        navigation.navigationBar.standardAppearance = appearance
+        navigation.navigationBar.scrollEdgeAppearance = appearance
+        navigation.navigationBar.compactAppearance = appearance
         Navigator.shared.navigation = navigation
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = navigation

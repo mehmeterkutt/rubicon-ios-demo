@@ -18,6 +18,7 @@ log; the SDK's own rule applies to what the demo prints about it.
 | `RubiconDemo/Net` | `ApiCalls` (the app's own `URLSession` with `RubiconNetworkObserver`), `FakeBackend` (the control endpoints) |
 | `RubiconDemo/Controllers` | `HomeViewController` (`ScreenNamed` `home`, hosts the tabs), `ProductViewController` (`product_detail`), `SettingsViewController` (class name), `LegacyLink` (plain) |
 | `RubiconDemo/UI` | SwiftUI: theme, components, the five tabs and Settings |
+| `GuideShots/` | A UI test that walks the app and saves the screenshots of the user guide (not a test of anything) |
 | `fake-server/server.py` | The Android demo's standard-library Python backend, with the iOS names |
 | `docs/manual-checklist.md` | The scenarios run before every release, with the last result |
 
@@ -37,7 +38,12 @@ xcrun simctl launch booted com.rubicon.demo
 xcrun simctl openurl booted "rubicon://open/promo?utm_source=terminal"
 xcrun simctl terminate booted com.rubicon.demo
 log stream --predicate 'subsystem == "com.rubicon.analytics"' --level debug   # the SDK's sink
+TEST_RUNNER_SHOTS=/tmp/shots xcodebuild test -project RubiconDemo.xcodeproj -scheme RubiconDemo \
+  -only-testing:GuideShots -destination 'platform=iOS Simulator,name=iPhone 18 Pro' -derivedDataPath .build/derived
 ```
+
+The last command needs the fake backend running; it writes one PNG per section of the guide into
+the directory given by `TEST_RUNNER_SHOTS`.
 
 Or open `RubiconDemo.xcodeproj` in Xcode and run.
 
