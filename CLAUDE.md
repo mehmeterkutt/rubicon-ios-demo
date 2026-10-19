@@ -1,7 +1,7 @@
 # Rubicon iOS demo app
 
 The iOS host app used to exercise the Rubicon analytics SDK by hand before a release, the
-counterpart of `rubicon-team/rubicon-android-demo`. The SDK lives in `rubicon-team/rubicon-ios-sdk`.
+counterpart of `mehmeterkutt/rubicon-android-demo`. The SDK lives in `mehmeterkutt/rubicon-ios-sdk`.
 This repository holds the
 app, the fake backend and the manual checklist. Never log or display property values from the SDK's
 log; the SDK's own rule applies to what the demo prints about it.

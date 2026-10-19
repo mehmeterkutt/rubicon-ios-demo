@@ -8,7 +8,7 @@ options:
 packages:
   Rubicon:
     # The SDK from its checkout next to this repository (the counterpart of the Android composite
-    # build). Once a release is tagged: `url: https://github.com/rubicon-team/rubicon-ios-sdk`,
+    # build). Once a release is tagged: `url: https://github.com/mehmeterkutt/rubicon-ios-sdk`,
     # `from: 0.1.0`.
     path: ../rubicon-ios-sdk
 targets:
